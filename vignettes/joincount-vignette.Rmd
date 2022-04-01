@@ -1,0 +1,110 @@
+---
+title: "Introduction to joincount"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction to joincount}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, message = FALSE, warning=FALSE}
+library(joincount)
+library(spdep)
+library(raster)
+library(Seurat)
+library(rgdal)
+library(reshape2)
+library(pheatmap)
+```
+
+v0.99.0
+
+joincount: Quantification tool for spatial correlation between clusters in spatial transciptomics pre-processed data using join count statustic approach.  
+
+This tool requires data produced with the 10X Genomics Visium Spatial Gene Expression platform with either standard or customized clusters. The purpose of this R package is to perform join count analysis for spatial correlation between clusters. Examples of how to run this tool are below:  
+```{r, message = FALSE, warning=FALSE}
+library("BiocFileCache")
+library("SpatialExperiment")
+library("rtracklayer")
+
+bfc <- BiocFileCache::BiocFileCache()
+bc.url <-
+  paste0(
+    "https://cf.10xgenomics.com/samples/spatial-exp/",
+    "1.1.0/V1_Breast_Cancer_Block_A_Section_1/",
+    c(
+      "V1_Breast_Cancer_Block_A_Section_1_filtered_feature_bc_matrix.tar.gz",
+      "V1_Breast_Cancer_Block_A_Section_1_spatial.tar.gz",
+      "V1_Breast_Cancer_Block_A_Section_1_analysis.tar.gz"
+    )
+  )
+
+
+h5.url <-
+  paste0(
+    "https://cf.10xgenomics.com/samples/spatial-exp/",
+    "1.1.0/V1_Breast_Cancer_Block_A_Section_1/",
+    "V1_Breast_Cancer_Block_A_Section_1_filtered_feature_bc_matrix.h5"
+  )
+
+outDir = '../inst/extdata/'
+bc.data <- sapply(bc.url, BiocFileCache::bfcrpath, x = bfc)
+sapply(bc.data, utils::untar, exdir = outDir)
+download.file(h5.url, destfile = paste0(outDir, "/filtered_feature_bc_matrix.h5"), method="curl")
+
+```
+1. spatialDataPrep() is a function to load a 10x Genomics Visium Spatial Experiment into a Seurat object, followed by sctransform and add seurat cluster label that provided in `./analysis/clustering/graphclust` to corresponding barcode. The 
+input is a directory containing the H5 file specified by filename, the image data in a subdirectory called spatial, and analysis results in a subdirectory called analysis.
+```{r dataImport, warnings = FALSE}
+sample <- spatialDataPrep('../inst/extdata/')
+# The name of .h5 file must match to the name of filtered_feature_bc_matrix
+```
+* Note: User can skip this step if they want to use the data with customized clusters attached. The data format required by this package is the column name of customized cluster labels must be called "Cluster". It can be checked by `head(sample@meta.data)` and can be changed as need.
+
+2. resolutionCalc() is a function to calculating the resolution for rasterization. This function will return a list of resolution.
+```{r, warnings = FALSE}
+resolutionList <- resolutionCalc(sample)
+```
+
+3. extentBuffer() is a function to find optimal number of buffer for extent. 
+```{r, warning=FALSE}
+n <- extentBuffer(sample)
+```
+
+4. rasterPrep() is a function to find the extent and set up the raster. This function will return a  rasterLayer object.
+```{r}
+raster <- rasterPrep(sample, n = n)
+```
+5. rasterizeEachCluster() is a function to rasterize each cluster and return the integrated mosaic.  
+
+User can directly jump to this step without perform resolutionCalc() and rasterPrep().  
+```{r, warnings = FALSE}
+mosaicIntegration <- rasterizeEachCluster(sample)
+```
+
+6. mosaicIntPlot() to visualize the integrated mosaic.
+```{r, fig.dim = c(6, 6)}
+mosaicIntPlot(mosaicIntegration)
+```
+
+
+7. joincountAnalysis() is a function that take the output of rasterizeEachCluster() as the input and return Join count analysis results. The result contain cluster pair/ observed join count/ Expected join count under spatial randomness/ Variance of observed vs expected/ Z-score.
+```{r, warnings = FALSE}
+joincount.result <- joincountAnalysis(mosaicIntegration)
+```
+
+8. Heatmap() is a function that take z-score between each column and form a pre-plot matrix. zscorePlot() is a function that plot heatmap.
+```{r, warnings = FALSE}
+matrix <- zscoreMatrix(sample, joincount.result)
+```
+
+```{r, fig.dim = c(6, 6)}
+zscorePlot(matrix)
+```
