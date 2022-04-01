@@ -15,3 +15,10 @@ Heatmap plot
 \description{
 Z-score heatmap.
 }
+\examples{
+data('humanBC')
+mosaicIntegration <- rasterizeEachCluster(humanBC)
+joincount.result <- joincountAnalysis(mosaicIntegration)
+matrix <- zscoreMatrix(humanBC, joincount.result)
+zscorePlot(matrix)
+}
