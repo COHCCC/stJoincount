@@ -14,8 +14,9 @@ Description: stJoincount, a bioinformatics tool uses join count statistic for qu
 License: MIT + file LICENSE
 Encoding: UTF-8
 Depends:
-    R (>= 4.1)
-Imports: Seurat,
+    R (>= 4.2.0)
+Imports: 
+    Seurat,
     utils, 
     graphics, 
     stats, 
@@ -23,11 +24,12 @@ Imports: Seurat,
     spdep, 
     sp, 
     reshape2, 
-    pheatmap
+    pheatmap,
+    BiocFileCache
 LazyData: FALSE
 RoxygenNote: 7.1.2
 Suggests: 
     knitr,
     rmarkdown
 VignetteBuilder: knitr
-biocViews: Transcriptomics, Clustering
+biocViews: Transcriptomics, Clustering, Spatial

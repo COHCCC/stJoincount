@@ -7,7 +7,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
+```{r set up, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -17,24 +17,23 @@ knitr::opts_chunk$set(
 ```{r setup, message = FALSE, warning=FALSE}
 library(stJoincount)
 library(BiocFileCache)
-library(SpatialExperiment)
-library(rtracklayer)
 library(spdep)
 library(raster)
 library(Seurat)
-library(rgdal)
+#library(hdf5r)
 library(reshape2)
 library(pheatmap)
 ```
 
 v0.99.0
 
-joincount: Quantification tool for spatial correlation between clusters in spatial transciptomics pre-processed data using join count statustic approach.  
+stJoincount: Quantification tool for spatial correlation between clusters in spatial transciptomics pre-processed data using join count statustic approach.  
 
 This tool requires data produced with the 10X Genomics Visium Spatial Gene Expression platform with either standard or customized clusters. The purpose of this R package is to perform join count analysis for spatial correlation between clusters. Examples of how to run this tool are below:  
 
-This is an example that we download data from 10x Genomics available from the human lymph node example, https://www.10xgenomics.com/resources/datasets/human-breast-cancer-block-a-section-1-1-standard-1-1-0 
+In this vignette, we are going to use an human breast cancer sample that could be downloaded from 10x Genomics website [here](https://www.10xgenomics.com/resources/datasets/human-breast-cancer-block-a-section-1-1-standard-1-1-0)
 ```{r, message = FALSE, warning=FALSE}
+
 bfc <- BiocFileCache::BiocFileCache()
 bc.url <-
   paste0(
@@ -56,11 +55,10 @@ h5.url <-
   )
 
 outDir = file.path(tempdir(), "outs")
-#outDir = '../inst/extdata/'
 bc.data <- sapply(bc.url, BiocFileCache::bfcrpath, x = bfc)
 sapply(bc.data, utils::untar, exdir = file.path(tempdir(), "outs"))
 download.file(h5.url, destfile = paste0(outDir, "/filtered_feature_bc_matrix.h5"), method="curl")
-
+#list.files(outDir)
 ```
 1. spatialDataPrep() is a function to load a 10x Genomics Visium Spatial Experiment into a Seurat object, followed by sctransform and add seurat cluster label that provided in `./analysis/clustering/graphclust` to corresponding barcode. The 
 input is a directory containing the H5 file specified by filename, the image data in a subdirectory called spatial, and analysis results in a subdirectory called analysis.
@@ -68,7 +66,7 @@ input is a directory containing the H5 file specified by filename, the image dat
 sample <- spatialDataPrep(outDir)
 # The name of .h5 file must match to the name of filtered_feature_bc_matrix
 ```
-* Note: User can skip this step if they want to use the data with customized clusters attached. The data format required by this package is the column name of customized cluster labels must be called "Cluster". It can be checked by `head(sample@meta.data)` and can be changed as need.
+* Note: User can skip this step if they want to use the data with customized clusters attached. The data format required by this package is the column name of customized cluster labels must be called "Cluster" (current version only accept cluster labels as integer "1,2,3..."). It can be checked by `head(sample@meta.data)` and can be changed as need.
 
 2. resolutionCalc() is a function to calculating the resolution for rasterization. This function will return a list of resolution.
 ```{r, warnings = FALSE}
@@ -109,4 +107,8 @@ matrix <- zscoreMatrix(sample, joincount.result)
 
 ```{r, fig.dim = c(6, 6)}
 zscorePlot(matrix)
+```
+
+```{r}
+sessionInfo()
 ```

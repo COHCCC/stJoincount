@@ -16,6 +16,7 @@ optimal number of buffer for extent
 Finding optimal number of buffer for extent.
 }
 \examples{
-data('humanBC')
+fpath <- system.file("extdata", "humanBC.rda", package="stJoincount")
+load(fpath)
 n <- extentBuffer(humanBC)
 }

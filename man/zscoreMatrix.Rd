@@ -18,7 +18,8 @@ z-score matrix
 Z-score matrix.
 }
 \examples{
-data('humanBC')
+fpath <- system.file("extdata", "humanBC.rda", package="stJoincount")
+load(fpath)
 mosaicIntegration <- rasterizeEachCluster(humanBC)
 joincount.result <- joincountAnalysis(mosaicIntegration)
 matrix <- zscoreMatrix(humanBC, joincount.result)

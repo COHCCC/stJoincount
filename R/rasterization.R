@@ -11,7 +11,8 @@
 #' @return Integrated mosaic.
 #'
 #' @examples
-#' data('humanBC')
+#' fpath <- system.file("extdata", "humanBC.rda", package="stJoincount")
+#' load(fpath)
 #' mosaicIntegration <- rasterizeEachCluster(humanBC)
 
 rasterizeEachCluster <- function(sample){
@@ -46,7 +47,8 @@ rasterizeEachCluster <- function(sample){
 #'
 #' @return mosaic plot with integrated pixels.
 #' @examples
-#' data('humanBC')
+#' fpath <- system.file("extdata", "humanBC.rda", package="stJoincount")
+#' load(fpath)
 #' mosaicIntegration <- rasterizeEachCluster(humanBC)
 #' mosaicIntPlot(mosaicIntegration)
 #'

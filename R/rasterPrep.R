@@ -1,6 +1,6 @@
 #' Finding the extent with buffer applied.
 #'
-#' @import Seurat
+#' @importFrom Seurat GetTissueCoordinates
 #' @import raster
 #' @export
 #'
@@ -10,7 +10,8 @@
 #' @return raster layer with calculated resolution and extent with buffer applied
 #'
 #' @examples
-#' data('humanBC')
+#' fpath <- system.file("extdata", "humanBC.rda", package="stJoincount")
+#' load(fpath)
 #' raster <- rasterPrep(humanBC, 10)
 
 rasterPrep <- function(sample, n){

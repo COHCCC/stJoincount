@@ -16,7 +16,8 @@ Heatmap plot
 Z-score heatmap.
 }
 \examples{
-data('humanBC')
+fpath <- system.file("extdata", "humanBC.rda", package="stJoincount")
+load(fpath)
 mosaicIntegration <- rasterizeEachCluster(humanBC)
 joincount.result <- joincountAnalysis(mosaicIntegration)
 matrix <- zscoreMatrix(humanBC, joincount.result)

@@ -16,6 +16,7 @@ Integrated mosaic.
 Rasterize each cluster and return the integrated mosaic
 }
 \examples{
-data('humanBC')
+fpath <- system.file("extdata", "humanBC.rda", package="stJoincount")
+load(fpath)
 mosaicIntegration <- rasterizeEachCluster(humanBC)
 }

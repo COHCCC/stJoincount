@@ -10,7 +10,8 @@
 #' @return z-score matrix
 #'
 #' @examples
-#' data('humanBC')
+#' fpath <- system.file("extdata", "humanBC.rda", package="stJoincount")
+#' load(fpath)
 #' mosaicIntegration <- rasterizeEachCluster(humanBC)
 #' joincount.result <- joincountAnalysis(mosaicIntegration)
 #' matrix <- zscoreMatrix(humanBC, joincount.result)
@@ -43,7 +44,8 @@ zscoreMatrix <- function(sample, joincount.result){
 #'
 #' @return Heatmap plot
 #' @examples
-#' data('humanBC')
+#' fpath <- system.file("extdata", "humanBC.rda", package="stJoincount")
+#' load(fpath)
 #' mosaicIntegration <- rasterizeEachCluster(humanBC)
 #' joincount.result <- joincountAnalysis(mosaicIntegration)
 #' matrix <- zscoreMatrix(humanBC, joincount.result)

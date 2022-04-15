@@ -16,6 +16,7 @@ length and height of resolution.
 Automatically calculating the resolution for rasterization.
 }
 \examples{
-data('humanBC')
+fpath <- system.file("extdata", "humanBC.rda", package="stJoincount")
+load(fpath)
 resolutionList <- resolutionCalc(humanBC)
 }

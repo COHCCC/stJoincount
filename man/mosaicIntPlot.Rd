@@ -16,7 +16,8 @@ mosaic plot with integrated pixels.
 Visulization of the rasterization results
 }
 \examples{
-data('humanBC')
+fpath <- system.file("extdata", "humanBC.rda", package="stJoincount")
+load(fpath)
 mosaicIntegration <- rasterizeEachCluster(humanBC)
 mosaicIntPlot(mosaicIntegration)
 

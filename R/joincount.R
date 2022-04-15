@@ -10,7 +10,8 @@
 #' @return Join count analysis results.
 #'
 #' @examples
-#' data('humanBC')
+#' fpath <- system.file("extdata", "humanBC.rda", package="stJoincount")
+#' load(fpath)
 #' mosaicIntegration <- rasterizeEachCluster(humanBC)
 #' joincount.result <- joincountAnalysis(mosaicIntegration)
 
