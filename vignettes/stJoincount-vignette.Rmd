@@ -57,7 +57,7 @@ h5.url <-
 outDir = file.path(tempdir(), "outs")
 bc.data <- sapply(bc.url, BiocFileCache::bfcrpath, x = bfc)
 sapply(bc.data, utils::untar, exdir = file.path(tempdir(), "outs"))
-download.file(h5.url, destfile = paste0(outDir, "/filtered_feature_bc_matrix.h5"), method="curl")
+download.file(h5.url, destfile = paste0(outDir, "/filtered_feature_bc_matrix.h5"), method="auto")
 #list.files(outDir)
 ```
 1. spatialDataPrep() is a function to load a 10x Genomics Visium Spatial Experiment into a Seurat object, followed by sctransform and add seurat cluster label that provided in `./analysis/clustering/graphclust` to corresponding barcode. The 
