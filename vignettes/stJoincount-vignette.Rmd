@@ -20,7 +20,7 @@ library(BiocFileCache)
 library(spdep)
 library(raster)
 library(Seurat)
-#library(hdf5r)
+library(hdf5r)
 library(reshape2)
 library(pheatmap)
 ```

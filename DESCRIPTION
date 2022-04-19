@@ -25,7 +25,8 @@ Imports:
     sp, 
     reshape2, 
     pheatmap,
-    BiocFileCache
+    BiocFileCache,
+    hdf5r
 LazyData: FALSE
 RoxygenNote: 7.1.2
 Suggests: 
