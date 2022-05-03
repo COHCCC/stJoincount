@@ -1,7 +1,7 @@
 # stJoincount
 
 ### Installation
-Package is available from bioconductor 3.15 (R version >= 4.1.0)
+Package is available from bioconductor 3.15 (R version >= 4.2.0)
 ```r
 if (!requireNamespace("BiocManager", quietly=TRUE))
     install.packages("BiocManager")
