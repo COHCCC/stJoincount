@@ -94,13 +94,12 @@ mosaicIntegration <- rasterizeEachCluster(sample)
 mosaicIntPlot(mosaicIntegration)
 ```
 
-
-7. joincountAnalysis() is a function that take the output of rasterizeEachCluster() as the input and return Join count analysis results. The result contain cluster pair/ observed join count/ Expected join count under spatial randomness/ Variance of observed vs expected/ Z-score.
+7. joincountAnalysis() is a function that takes the output of rasterizeEachCluster() as the input and return Join count analysis results. The result contain cluster pair/ observed join count/ Expected join count under spatial randomness/ Variance of observed vs expected/ Z-score.
 ```{r, warnings = FALSE}
 joincount.result <- joincountAnalysis(mosaicIntegration)
 ```
 
-8. Heatmap() is a function that take z-score between each column and form a pre-plot matrix. zscorePlot() is a function that plot heatmap.
+8. Heatmap() is a function that takes z-score between each column and form a pre-plot matrix. zscorePlot() is a function that plot heatmap.
 ```{r, warnings = FALSE}
 matrix <- zscoreMatrix(sample, joincount.result)
 ```
