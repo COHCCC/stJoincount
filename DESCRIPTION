@@ -19,7 +19,7 @@ The z-score is then calculated as the difference between observed and expected c
 License: MIT + file LICENSE
 Encoding: UTF-8
 Depends:
-    R (>= 4.0.0)
+    R (>= 3.6.0)
 Imports: 
     Seurat,
     utils, 
