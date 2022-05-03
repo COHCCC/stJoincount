@@ -9,7 +9,7 @@ Spatial dependency helps determine whether there is a match between locational a
 
 Detail introduction of each function in this package can be found in `/vignettes/stJointcount-vignette.Rmd`
 
-Following codes show main functions of rasterization and joint count analysis. In this demo, we are going to use an human breast cancer sample that could be downloaded from 10x Genomics website [here](https://www.10xgenomics.com/resources/datasets/human-breast-cancer-block-a-section-1-1-standard-1-1-0). User can download the related folders and files directly from the website, or they can follow first two blocks of codes in the vignette, saving them in the R temp folder.
+Following codes show main functions of rasterization and join count analysis. In this demo, we are going to use an human breast cancer sample that could be downloaded from 10x Genomics website [here](https://www.10xgenomics.com/resources/datasets/human-breast-cancer-block-a-section-1-1-standard-1-1-0). User can download the related folders and files directly from the website, or they can follow first two blocks of codes in the vignette, saving them in the R temp folder.
 
 ### Data input
 
