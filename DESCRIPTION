@@ -19,7 +19,7 @@ Description: stJoincount, the application of join count analysis to the spatial 
 License: MIT + file LICENSE
 Encoding: UTF-8
 Depends:
-    R (>= 3.6.0)
+    R (>= 4.0)
 Imports: 
     Seurat,
     utils, 
