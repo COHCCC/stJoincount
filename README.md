@@ -1,6 +1,3 @@
-<!-- badges: start -->
-[![R-CMD-check](https://github.com/Nina-Song/stJoincount/workflows/R-CMD-check/badge.svg)](https://github.com/campbio/scruff/actions)
-<!-- badges: end -->
 
 # stJointcount: Quantifying spatial dependencies between clusters for spatial transcriptomic data
 
