@@ -2,7 +2,7 @@
 #'
 #' @importFrom stats median
 #' @import graphics
-#' @import Seurat
+#' @importFrom Seurat GetTissueCoordinates
 #' @export
 #'
 #' @param sample seruat object that have cluster labels attached.

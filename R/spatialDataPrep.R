@@ -1,4 +1,4 @@
-#' Prepare input data
+#' Prepare input data (seurat object), add label to the object
 #'
 #' @import Seurat
 #' @importFrom utils read.csv

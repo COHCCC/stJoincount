@@ -31,6 +31,7 @@ Suggests:
     knitr,
     rmarkdown,
     BiocFileCache,
-    hdf5r
+    rhdf5
 VignetteBuilder: knitr
-biocViews: Transcriptomics, Clustering, Spatial
+biocViews: Transcriptomics, Clustering, Spatial, Bioviews
+Bugreports: https://github.com/Nina-Song/stJoincount/issues

@@ -17,7 +17,7 @@ knitr::opts_chunk$set(
 ```{r setup, message = FALSE, warning=FALSE}
 library(stJoincount)
 library(BiocFileCache)
-library(hdf5r)
+#library(rhdf5)
 library(spdep)
 library(raster)
 library(Seurat)

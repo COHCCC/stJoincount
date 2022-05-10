@@ -1,6 +1,6 @@
 #' Rasterize each cluster and return the integrated mosaic
 #'
-#' @import Seurat
+#' @importFrom Seurat GetTissueCoordinates
 #' @import raster
 #' @import spdep
 #' @import sp
