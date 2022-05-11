@@ -13,13 +13,13 @@ The following code demonstrates the process of rasterization and join count anal
 
 ### Data input, normalization, and clustering
 
-The input is a directory containing the H5 file, the image data (in a subdirectory ‘spatial’), and analysis results (in a subdirectory ‘analysis’).
+The input is a directory containing the H5 file, the image data (in a subdirectory ‘spatial’), and analysis results (in a subdirectory ‘analysis’). This directory is produced by the 10x Genomics Spaceranger pipelines.
 
 ```r
 sample <- spatialDataPrep(outDir)
 ```
 
-This command will load the expression data and image into a Seurat object. It will also normalize the expression data and perform clustering analysis of the data at defaut Seurat clustering parameters. 
+This command will load a Seurat object and add the results of Spaceranger's graph-based clustering analysis to the object's metadata. 
 
 **Note:** Users can skip this step if they want to use the data with custom labels attached. In this case, users should load their object and add label assignments to the object metadata under the title "Cluster". 
 
