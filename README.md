@@ -76,7 +76,5 @@ library(devtools)
 install_github("Nina-Song/stJoincount")
 ```
 
-=======
->>>>>>> 10f837a70c084e2f955dfa4e258fd3880a54ef0b
 ### Contact
 songjiar@usc.edu
