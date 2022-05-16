@@ -34,9 +34,17 @@ LazyData: FALSE
 RoxygenNote: 7.1.2
 Suggests: 
     knitr,
+<<<<<<< HEAD
     rmarkdown,
     BiocFileCache,
     rhdf5
+||||||| 8302b5d
+    rmarkdown
+=======
+    rmarkdown,
+    BiocFileCache,
+    hdf5r
+>>>>>>> 2823dd6accd6e674330bd2c6b620c1efdebf7554
 VignetteBuilder: knitr
 biocViews: Transcriptomics, Clustering, Spatial, Bioviews
 Bugreports: https://github.com/Nina-Song/stJoincount/issues
