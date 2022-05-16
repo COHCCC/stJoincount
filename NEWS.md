@@ -24,5 +24,9 @@
 
 ---------------------
 * Add details to README
-```
+
+## stJoincount 0.99.4
+
+---------------------
+* Fixed merge errors
 ```
