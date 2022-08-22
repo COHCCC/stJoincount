@@ -45,4 +45,9 @@
 
 ---------------------
 * Deleted system files
+
+## stJoincount 0.99.8
+
+---------------------
+* Deleted system files in /inst
 ```
