@@ -2,21 +2,30 @@
 % Please edit documentation in R/extentBuffer.R
 \name{extentBuffer}
 \alias{extentBuffer}
-\title{Finding optimal number of buffer for extent.}
+\title{When we create the rasterlayer, there will be a rectangular range.
+It is often necessary to provide a buffer to ensure that subsequent functions
+do not result in blank or missed pixels.
+This function is to find the right buffer for the sample coordinates
+so that each cluster is not lost in the process of converting a spot to a pixel.}
 \usage{
-extentBuffer(sample)
+extentBuffer(sampleInfo)
 }
 \arguments{
-\item{sample}{seruat object that have cluster labels attached.}
+\item{sampleInfo}{A dataset of a human breast cancer sample containing the
+pixel information and cluster labels for each barcode}
 }
 \value{
 optimal number of buffer for extent
 }
 \description{
-Finding optimal number of buffer for extent.
+When we create the rasterlayer, there will be a rectangular range.
+It is often necessary to provide a buffer to ensure that subsequent functions
+do not result in blank or missed pixels.
+This function is to find the right buffer for the sample coordinates
+so that each cluster is not lost in the process of converting a spot to a pixel.
 }
 \examples{
-fpath <- system.file("extdata", "humanBC.rda", package="stJoincount")
+fpath <- system.file("script", "humanBC.rda", package="stJoincount")
 load(fpath)
 n <- extentBuffer(humanBC)
 }

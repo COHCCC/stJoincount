@@ -2,21 +2,21 @@
 % Please edit documentation in R/zscoreHeatmap.R
 \name{zscorePlot}
 \alias{zscorePlot}
-\title{Z-score heatmap.}
+\title{Visulization of Z-score heatmap.}
 \usage{
 zscorePlot(zscoreMatrix)
 }
 \arguments{
-\item{zscoreMatrix}{calculated and reshaped z-score matirx from join count analysis}
+\item{zscoreMatrix}{calculated and reshaped z-score matirx from join count analysis.}
 }
 \value{
 Heatmap plot
 }
 \description{
-Z-score heatmap.
+Visulization of Z-score heatmap.
 }
 \examples{
-fpath <- system.file("extdata", "humanBC.rda", package="stJoincount")
+fpath <- system.file("script", "humanBC.rda", package="stJoincount")
 load(fpath)
 mosaicIntegration <- rasterizeEachCluster(humanBC)
 joincount.result <- joincountAnalysis(mosaicIntegration)

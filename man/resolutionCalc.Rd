@@ -2,21 +2,22 @@
 % Please edit documentation in R/resolution.R
 \name{resolutionCalc}
 \alias{resolutionCalc}
-\title{Automatically calculating the resolution for rasterization.}
+\title{Automatic calculation of optimal raster resolution for the sample.}
 \usage{
-resolutionCalc(sample)
+resolutionCalc(sampleInfo)
 }
 \arguments{
-\item{sample}{seruat object that have cluster labels attached.}
+\item{sampleInfo}{A dataset of a human breast cancer sample containing the
+pixel information and cluster labels for each barcode.}
 }
 \value{
 length and height of resolution.
 }
 \description{
-Automatically calculating the resolution for rasterization.
+Automatic calculation of optimal raster resolution for the sample.
 }
 \examples{
-fpath <- system.file("extdata", "humanBC.rda", package="stJoincount")
+fpath <- system.file("script", "humanBC.rda", package="stJoincount")
 load(fpath)
 resolutionList <- resolutionCalc(humanBC)
 }

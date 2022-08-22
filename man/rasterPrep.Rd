@@ -2,23 +2,28 @@
 % Please edit documentation in R/rasterPrep.R
 \name{rasterPrep}
 \alias{rasterPrep}
-\title{Finding the extent with buffer applied.}
+\title{When sample coordinates finds a suitable buffer to ensure that each cluster is not lost
+in the process of converting the spot to pixel,
+apply this buffer to this function to find a suitable rectangle for the rasterlayer}
 \usage{
-rasterPrep(sample, n)
+rasterPrep(sampleInfo, n)
 }
 \arguments{
-\item{sample}{seruat object that have cluster labels attached.}
+\item{sampleInfo}{A dataset of a human breast cancer sample containing the
+pixel information and cluster labels for each barcode.}
 
-\item{n}{buffer for extent}
+\item{n}{buffer for extent (from function extentBuffer).}
 }
 \value{
 raster layer with calculated resolution and extent with buffer applied
 }
 \description{
-Finding the extent with buffer applied.
+When sample coordinates finds a suitable buffer to ensure that each cluster is not lost
+in the process of converting the spot to pixel,
+apply this buffer to this function to find a suitable rectangle for the rasterlayer
 }
 \examples{
-fpath <- system.file("extdata", "humanBC.rda", package="stJoincount")
+fpath <- system.file("script", "humanBC.rda", package="stJoincount")
 load(fpath)
-raster <- rasterPrep(humanBC, 10)
+raster <- rasterPrep(humanBC, 15)
 }

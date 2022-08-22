@@ -2,21 +2,24 @@
 % Please edit documentation in R/rasterization.R
 \name{rasterizeEachCluster}
 \alias{rasterizeEachCluster}
-\title{Rasterize each cluster and return the integrated mosaic}
+\title{Converts a labeled spatial tissue map into a raster object,
+in which each spatial cluster is represented by a pixel coded by label assignment.}
 \usage{
-rasterizeEachCluster(sample)
+rasterizeEachCluster(sampleInfo)
 }
 \arguments{
-\item{sample}{seruat object that have cluster labels attached.}
+\item{sampleInfo}{A dataset of a human breast cancer sample containing the
+pixel information and cluster labels for each barcode.}
 }
 \value{
-Integrated mosaic.
+A raster object converted from a labeled spatial tissue map.
 }
 \description{
-Rasterize each cluster and return the integrated mosaic
+Converts a labeled spatial tissue map into a raster object,
+in which each spatial cluster is represented by a pixel coded by label assignment.
 }
 \examples{
-fpath <- system.file("extdata", "humanBC.rda", package="stJoincount")
+fpath <- system.file("script", "humanBC.rda", package="stJoincount")
 load(fpath)
 mosaicIntegration <- rasterizeEachCluster(humanBC)
 }

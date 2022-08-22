@@ -29,4 +29,15 @@
 
 ---------------------
 * Fixed merge errors
+
+## stJoincount 0.99.5
+
+---------------------
+* Changed major structure of the input dataset
+* Added custom cluster label options
+
+## stJoincount 0.99.6
+
+---------------------
+* Updated vignettes
 ```

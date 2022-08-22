@@ -2,21 +2,25 @@
 % Please edit documentation in R/joincount.R
 \name{joincountAnalysis}
 \alias{joincountAnalysis}
-\title{Join count analysis.}
+\title{This function performes multi-categorical join count analysis of
+the rasterized sample. A neighbors list is then created from the rasterized sample,
+in which adjacent and diagonal neighbors for each pixel are identified.}
 \usage{
 joincountAnalysis(mosaicIntegration)
 }
 \arguments{
-\item{mosaicIntegration}{RasterLayer that output from Function rasterization.}
+\item{mosaicIntegration}{A raster object converted from a labeled spatial tissue map from Function rasterization.}
 }
 \value{
-Join count analysis results.
+the observed join counts, the expected count under conditions of spatial randomness, the variance calculated under non-free sampling, and calculated Z-score.
 }
 \description{
-Join count analysis.
+This function performes multi-categorical join count analysis of
+the rasterized sample. A neighbors list is then created from the rasterized sample,
+in which adjacent and diagonal neighbors for each pixel are identified.
 }
 \examples{
-fpath <- system.file("extdata", "humanBC.rda", package="stJoincount")
+fpath <- system.file("script", "humanBC.rda", package="stJoincount")
 load(fpath)
 mosaicIntegration <- rasterizeEachCluster(humanBC)
 joincount.result <- joincountAnalysis(mosaicIntegration)

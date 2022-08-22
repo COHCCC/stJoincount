@@ -2,23 +2,26 @@
 % Please edit documentation in R/zscoreHeatmap.R
 \name{zscoreMatrix}
 \alias{zscoreMatrix}
-\title{Z-score matrix.}
+\title{This function provides a heatmap of z-scores resulting
+from the join count analysis for all possible label pairs.}
 \usage{
-zscoreMatrix(sample, joincount.result)
+zscoreMatrix(sampleInfo, joincount.result)
 }
 \arguments{
-\item{sample}{seruat object that have cluster labels attached}
+\item{sampleInfo}{A dataset of a human breast cancer sample containing the
+pixel information and cluster labels for each barcode.}
 
 \item{joincount.result}{calculated result from join count analysis}
 }
 \value{
-z-score matrix
+z-score matrix resulting from the join count analysis for all possible label pairs
 }
 \description{
-Z-score matrix.
+This function provides a heatmap of z-scores resulting
+from the join count analysis for all possible label pairs.
 }
 \examples{
-fpath <- system.file("extdata", "humanBC.rda", package="stJoincount")
+fpath <- system.file("script", "humanBC.rda", package="stJoincount")
 load(fpath)
 mosaicIntegration <- rasterizeEachCluster(humanBC)
 joincount.result <- joincountAnalysis(mosaicIntegration)

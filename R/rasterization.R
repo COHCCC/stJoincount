@@ -1,32 +1,33 @@
-#' Rasterize each cluster and return the integrated mosaic
+#' Converts a labeled spatial tissue map into a raster object,
+#' in which each spatial cluster is represented by a pixel coded by label assignment.
 #'
-#' @importFrom Seurat GetTissueCoordinates
-#' @import raster
-#' @import spdep
-#' @import sp
+#' @importFrom raster rasterize mosaic
+#' @importFrom sp coordinates
 #' @export
 #'
-#' @param sample seruat object that have cluster labels attached.
+#' @param sampleInfo A dataset of a human breast cancer sample containing the
+#' pixel information and cluster labels for each barcode.
 #'
-#' @return Integrated mosaic.
+#' @return A raster object converted from a labeled spatial tissue map.
 #'
 #' @examples
-#' fpath <- system.file("extdata", "humanBC.rda", package="stJoincount")
+#' fpath <- system.file("script", "humanBC.rda", package="stJoincount")
 #' load(fpath)
 #' mosaicIntegration <- rasterizeEachCluster(humanBC)
 
-rasterizeEachCluster <- function(sample){
-  sampleCoord <- GetTissueCoordinates(sample)
-  sampleCoord$clusters <- sample$Cluster
+rasterizeEachCluster <- function(sampleInfo){
+  sampleCoord <- sampleInfo
+  sampleCoord$numericCluster <- unclass(as.factor(sampleCoord$Cluster))
+  clusterNumber <- length(unique(sampleCoord$numericCluster))
 
-  n <- extentBuffer(sample)
-  r <- rasterPrep(sample, n)
+  n <- extentBuffer(sampleInfo)
+  r <- rasterPrep(sampleInfo, n)
   mosaicClusters <- list()
 
-  for (i in 1:length(unique(sampleCoord$clusters))){
-    subCluster <- subset(sampleCoord, clusters == i)
+  for (i in seq_len(clusterNumber)){
+    subCluster <- subset(sampleCoord, numericCluster == i)
     spdf <- subCluster
-    coordinates(spdf) <- c("imagerow", "imagecol") #create a Spatial object
+    sp::coordinates(spdf) <- c("imagerow", "imagecol") #create a Spatial object
     nam <- paste("clusterRast", i, sep = "_")
     clusterName <- assign(nam, rasterize(spdf, r, field = i, extent = jc.extent, background = 0))
     mosaicClusters <- c(mosaicClusters, clusterName)
@@ -39,23 +40,43 @@ rasterizeEachCluster <- function(sample){
   return(mosaicIntegration)
 }
 
-#' Visulization of the rasterization results
+#' Visulization of the rasterization results and label coding of the sample.
 #'
-#' @import Seurat
-#' @param mosaicIntegration Integrated mosaic of each cluster.
+#' @importFrom raster rasterToPoints
+#' @importFrom ggplot2 ggplot geom_tile aes scale_fill_manual coord_equal theme_void theme element_blank
+#' @param sampleInfo A dataset of a human breast cancer sample containing the
+#' pixel information and cluster labels for each barcode.
+#' @param mosaicIntegration A raster object converted from a labeled spatial tissue map.
 #' @export
 #'
-#' @return mosaic plot with integrated pixels.
+#' @return A mosaic plot with labeled pixels.
+#'
 #' @examples
-#' fpath <- system.file("extdata", "humanBC.rda", package="stJoincount")
+#' fpath <- system.file("script", "humanBC.rda", package="stJoincount")
 #' load(fpath)
 #' mosaicIntegration <- rasterizeEachCluster(humanBC)
-#' mosaicIntPlot(mosaicIntegration)
+#' mosaicIntPlot(humanBC, mosaicIntegration)
 #'
-mosaicIntPlot <- function(mosaicIntegration){
-  cuts <- c(0,0.99,1.99,2.99,3.99,4.99,5.99,6.99,7.99,8.99, 9.99, 10.99, 11.99) #for setting colors per cluster
-  colors.raster <- c("#FFFFFF", "#810505", "#f79c09", "#f30808","#f3eb17", "#bcf775", "#5cd04d", "#2b7f20", "#2cdcc2", "#78cdf5", "#1b5fe4", "#811be4", "#cc6ae6", "#f59ad5", "#9c6d6d")
+mosaicIntPlot <- function(sampleInfo, mosaicIntegration){
+  nameList <- customDict(sampleInfo)
 
-  plot(mosaicIntegration, breaks = cuts, col = colors.raster)
-  # return(p1)
+  r_df <- data.frame(rasterToPoints(mosaicIntegration))
+  clusterNumber <- seq_along(unique(r_df$layer))
+  layerNumber <- clusterNumber - 1
+  r_df$cuts <- cut(r_df$layer,breaks=layerNumber)
+  r_plot <- na.omit(r_df)
+
+  colors.raster <- c("#810505", "#f79c09", "#f30808","#f3eb17", "#bcf775", "#5cd04d", "#2b7f20", "#2cdcc2",
+                     "#78cdf5", "#1b5fe4", "#811be4", "#cc6ae6", "#f59ad5", "#9c6d6d", "#0000FF")
+
+  ggplot(data=r_plot) +
+    geom_tile(aes(x=x,y=y,fill=cuts)) +
+    scale_fill_manual("Cluster", values = colors.raster, labels = nameList[clusterNumber]) +
+    coord_equal() +
+    theme_void() +
+    theme(axis.text.x=element_blank(),
+          axis.ticks.x=element_blank(),
+          axis.text.y=element_blank(),
+          axis.ticks.y=element_blank()
+    )
 }

@@ -1,30 +1,30 @@
-#' Automatically calculating the resolution for rasterization.
+#' Automatic calculation of optimal raster resolution for the sample.
 #'
 #' @importFrom stats median
-#' @import graphics
-#' @importFrom Seurat GetTissueCoordinates
+#' @importFrom graphics boxplot
 #' @export
 #'
-#' @param sample seruat object that have cluster labels attached.
+#' @param sampleInfo A dataset of a human breast cancer sample containing the
+#' pixel information and cluster labels for each barcode.
 #'
 #' @return length and height of resolution.
 #'
 #' @examples
-#' fpath <- system.file("extdata", "humanBC.rda", package="stJoincount")
+#' fpath <- system.file("script", "humanBC.rda", package="stJoincount")
 #' load(fpath)
 #' resolutionList <- resolutionCalc(humanBC)
 
-resolutionCalc <- function(sample){
-  copyCoord <- GetTissueCoordinates(sample)
-  copyCoord$int.row <- as.integer(copyCoord$imagerow)
-  copyCoord$int.col <- as.integer(copyCoord$imagecol)
+resolutionCalc <- function(sampleInfo){
+  sampleCoord <- sampleInfo
+  sampleCoord$int.row <- as.integer(sampleCoord$imagerow)
+  sampleCoord$int.col <- as.integer(sampleCoord$imagecol)
 
   diffCol <- list()
   diffRow <- list()
 
-  for (i in 1:nrow(copyCoord)){
-    a <- copyCoord$int.row[i]
-    targetCol <- subset(copyCoord, int.row == a)[order(subset(copyCoord, int.row == a)$imagecol),]
+  for (i in seq_len(nrow(sampleCoord))){
+    a <- sampleCoord$int.row[i]
+    targetCol <- subset(sampleCoord, int.row == a)[order(subset(sampleCoord, int.row == a)$imagecol),]
     subtractCol <- diff(as.matrix(targetCol$imagecol))
     outliersA <- boxplot(subtractCol, plot=FALSE)$out
     if (length(outliersA) > 0){
@@ -35,8 +35,8 @@ resolutionCalc <- function(sample){
     }
     diffCol <- c(diffCol, differenceInCol)
 
-    b <- copyCoord$int.col[i]
-    targetRow <- subset(copyCoord, int.col == b)[order(subset(copyCoord, int.col == b)$imagerow),]
+    b <- sampleCoord$int.col[i]
+    targetRow <- subset(sampleCoord, int.col == b)[order(subset(sampleCoord, int.col == b)$imagerow),]
     subtractRow <- diff(as.matrix(targetRow$imagerow))
     outliersB <- boxplot(subtractRow, plot=FALSE)$out
     if (length(outliersB) > 0){

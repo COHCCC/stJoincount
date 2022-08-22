@@ -2,23 +2,26 @@
 % Please edit documentation in R/rasterization.R
 \name{mosaicIntPlot}
 \alias{mosaicIntPlot}
-\title{Visulization of the rasterization results}
+\title{Visulization of the rasterization results and label coding of the sample.}
 \usage{
-mosaicIntPlot(mosaicIntegration)
+mosaicIntPlot(sampleInfo, mosaicIntegration)
 }
 \arguments{
-\item{mosaicIntegration}{Integrated mosaic of each cluster.}
+\item{sampleInfo}{A dataset of a human breast cancer sample containing the
+pixel information and cluster labels for each barcode.}
+
+\item{mosaicIntegration}{A raster object converted from a labeled spatial tissue map.}
 }
 \value{
-mosaic plot with integrated pixels.
+A mosaic plot with labeled pixels.
 }
 \description{
-Visulization of the rasterization results
+Visulization of the rasterization results and label coding of the sample.
 }
 \examples{
-fpath <- system.file("extdata", "humanBC.rda", package="stJoincount")
+fpath <- system.file("script", "humanBC.rda", package="stJoincount")
 load(fpath)
 mosaicIntegration <- rasterizeEachCluster(humanBC)
-mosaicIntPlot(mosaicIntegration)
+mosaicIntPlot(humanBC, mosaicIntegration)
 
 }

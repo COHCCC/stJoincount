@@ -1,33 +1,36 @@
-#' Finding optimal number of buffer for extent.
+#' When we create the rasterlayer, there will be a rectangular range.
+#' It is often necessary to provide a buffer to ensure that subsequent functions
+#' do not result in blank or missed pixels.
+#' This function is to find the right buffer for the sample coordinates
+#' so that each cluster is not lost in the process of converting a spot to a pixel.
 #'
-#' @importFrom Seurat GetTissueCoordinates
-#' @import raster
-#' @import spdep
-#' @import sp
+#' @importFrom raster raster
+#' @importFrom sp coordinates
 #' @export
 #'
-#' @param sample seruat object that have cluster labels attached.
+#' @param sampleInfo A dataset of a human breast cancer sample containing the
+#' pixel information and cluster labels for each barcode
 #'
 #' @return optimal number of buffer for extent
 #'
 #' @examples
-#' fpath <- system.file("extdata", "humanBC.rda", package="stJoincount")
+#' fpath <- system.file("script", "humanBC.rda", package="stJoincount")
 #' load(fpath)
 #' n <- extentBuffer(humanBC)
 
-extentBuffer <- function(sample){
-  sampleCoord <- GetTissueCoordinates(sample)
-  sampleCoord$clusters <- sample$Cluster
-  clusterNumber <- length(unique(sampleCoord$clusters))
+extentBuffer <- function(sampleInfo){
+  sampleCoord <- sampleInfo
+  sampleCoord$numericCluster <- unclass(as.factor(sampleCoord$Cluster))
+  clusterNumber <- length(unique(sampleCoord$numericCluster))
 
   n = 10
-  for (j in 1:20){
+  for (j in seq_len(20)){
     k = 0
-    r <- rasterPrep(sample, n)
-    for (i in 1:clusterNumber){
-      subCluster <- subset(sampleCoord, clusters == i)
+    r <- rasterPrep(sampleInfo, n)
+    for (i in seq_len(clusterNumber)){
+      subCluster <- subset(sampleCoord, numericCluster == i)
       spdf <- subCluster
-      coordinates(spdf) <- c("imagerow", "imagecol") #create a Spatial object
+      sp::coordinates(spdf) <- c("imagerow", "imagecol") #create a Spatial object
       nam <- paste("clusterRast", i, sep = "_")
       clusterName <- assign(nam, rasterize(spdf, r, field = i, extent = jc.extent, background = 0))
       valueCheck <- sum(clusterName@data@values)/i
@@ -37,13 +40,15 @@ extentBuffer <- function(sample){
       } else { k = k + 1}
     }
     if (k == clusterNumber){
-      print(paste("Found optimal number of buffer. n =", n, sep = " "))
+      message(paste("Find optimal number of n. n =", n, sep = " "))
       return(n)
       break
     }
     n = n + 5
   }
-  print("No optimal number of buffer found, using n = 110 instead.")
-  print("In this case, there may be minor deviations in the subsequent calculation process. The results are for reference only")
+  message("No optimal number found, using n = 110 instead.")
+  message("In this case, there may be minor deviations in the subsequent calculation process.
+        The results are for reference only")
   return(n)
 }
+

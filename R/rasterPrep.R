@@ -1,33 +1,30 @@
-#' Finding the extent with buffer applied.
+#' When sample coordinates finds a suitable buffer to ensure that each cluster is not lost
+#' in the process of converting the spot to pixel,
+#' apply this buffer to this function to find a suitable rectangle for the rasterlayer
 #'
-#' @importFrom Seurat GetTissueCoordinates
-#' @import raster
+#' @importFrom raster raster extent
 #' @export
 #'
-#' @param sample seruat object that have cluster labels attached.
-#' @param n buffer for extent
+#' @param sampleInfo A dataset of a human breast cancer sample containing the
+#' pixel information and cluster labels for each barcode.
+#' @param n buffer for extent (from function extentBuffer).
 #'
 #' @return raster layer with calculated resolution and extent with buffer applied
 #'
 #' @examples
-#' fpath <- system.file("extdata", "humanBC.rda", package="stJoincount")
+#' fpath <- system.file("script", "humanBC.rda", package="stJoincount")
 #' load(fpath)
-#' raster <- rasterPrep(humanBC, 10)
+#' raster <- rasterPrep(humanBC, 15)
 
-rasterPrep <- function(sample, n){
-  #get coordinates
-  sampleCoord <- GetTissueCoordinates(sample)
-  sampleCoord$clusters <- sample$Cluster
-  coordSummary <- as.data.frame(apply(sampleCoord,2,summary))
-
-  #create raster that will apply to all subsets
-  imagerow.min <- as.integer(coordSummary$imagerow[1])
-  imagerow.max <- as.integer(coordSummary$imagerow[6])
-  imagecol.min <- as.integer(coordSummary$imagecol[1])
-  imagecol.max <- as.integer(coordSummary$imagecol[6])
+rasterPrep <- function(sampleInfo, n){
+  imagerow.min <- as.integer(min(sampleInfo$imagerow))
+  imagerow.max <- as.integer(max(sampleInfo$imagerow))
+  imagecol.min <- as.integer(min(sampleInfo$imagecol))
+  imagecol.max <- as.integer(max(sampleInfo$imagecol))
   jc.extent <- extent(imagerow.min-n, imagerow.max+n, imagecol.min-n, imagecol.max+n)
 
-  resolutionList <- resolutionCalc(sample)
+  resolutionList <- resolutionCalc(sampleInfo)
   r <- raster(resolution = resolutionList, ext = jc.extent)
   return(r)
 }
+
