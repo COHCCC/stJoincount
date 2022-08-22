@@ -40,4 +40,9 @@
 
 ---------------------
 * Updated vignettes
+
+## stJoincount 0.99.7
+
+---------------------
+* Deleted system files
 ```
