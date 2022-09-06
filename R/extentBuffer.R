@@ -30,12 +30,11 @@ extentBuffer <- function(sampleInfo){
     for (i in seq_len(clusterNumber)){
       subCluster <- subset(sampleCoord, numericCluster == i)
       spdf <- subCluster
-      sp::coordinates(spdf) <- c("imagerow", "imagecol") #create a Spatial object
+      sp::coordinates(spdf) <- c("imagerow", "imagecol")
       nam <- paste("clusterRast", i, sep = "_")
       clusterName <- assign(nam, rasterize(spdf, r, field = i, extent = jc.extent, background = 0))
       valueCheck <- sum(clusterName@data@values)/i
       if (valueCheck != nrow(subCluster)){
-        # print("The number of pixels is not equal to the number of barcodes")
         break
       } else { k = k + 1}
     }

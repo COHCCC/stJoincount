@@ -40,7 +40,7 @@ rasterizeEachCluster <- function(sampleInfo){
   return(mosaicIntegration)
 }
 
-#' Visulization of the rasterization results and label coding of the sample.
+#' Visualization of the rasterization results and label coding of the sample.
 #'
 #' @importFrom raster rasterToPoints
 #' @importFrom ggplot2 ggplot geom_tile aes scale_fill_manual coord_equal theme_void theme element_blank

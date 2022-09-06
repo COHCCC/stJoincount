@@ -2,7 +2,7 @@
 % Please edit documentation in R/rasterization.R
 \name{mosaicIntPlot}
 \alias{mosaicIntPlot}
-\title{Visulization of the rasterization results and label coding of the sample.}
+\title{Visualization of the rasterization results and label coding of the sample.}
 \usage{
 mosaicIntPlot(sampleInfo, mosaicIntegration)
 }
@@ -16,7 +16,7 @@ pixel information and cluster labels for each barcode.}
 A mosaic plot with labeled pixels.
 }
 \description{
-Visulization of the rasterization results and label coding of the sample.
+Visualization of the rasterization results and label coding of the sample.
 }
 \examples{
 fpath <- system.file("script", "humanBC.rda", package="stJoincount")

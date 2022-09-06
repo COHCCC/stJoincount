@@ -50,4 +50,9 @@
 
 ---------------------
 * Deleted system files in /inst
+
+## stJoincount 0.99.9
+
+---------------------
+* Added unit tests for all functions
 ```
