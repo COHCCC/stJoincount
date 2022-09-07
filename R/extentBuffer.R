@@ -23,9 +23,9 @@ extentBuffer <- function(sampleInfo){
   sampleCoord$numericCluster <- unclass(as.factor(sampleCoord$Cluster))
   clusterNumber <- length(unique(sampleCoord$numericCluster))
 
-  n = 10
+  n <- 10
   for (j in seq_len(20)){
-    k = 0
+    k <- 0
     r <- rasterPrep(sampleInfo, n)
     for (i in seq_len(clusterNumber)){
       subCluster <- subset(sampleCoord, numericCluster == i)

@@ -55,4 +55,9 @@
 
 ---------------------
 * Added unit tests for all functions
+
+## stJoincount 0.99.10
+
+---------------------
+* Added ORCID
 ```
