@@ -55,8 +55,8 @@ resolutionCalc <- function(sampleInfo){
 
   # checking the orientation
   if (abs(X-Y) < 2){
-    X = X/2
-    Y = Y*2
+    X <- X/2
+    Y <- Y*2
   }
 
   return(c(X, Y))
