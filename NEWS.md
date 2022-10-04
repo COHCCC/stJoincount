@@ -54,3 +54,7 @@
 * Extdata re-decumentation 
 * Vignette updating - explanation of example data.frame, reorder sessions
 * Optimized code
+
+## stJoincount 0.99.12
+
+* Optimized code
