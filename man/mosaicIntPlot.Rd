@@ -19,7 +19,7 @@ A mosaic plot with labeled pixels.
 Visualization of the rasterization results and label coding of the sample.
 }
 \examples{
-fpath <- system.file("script", "humanBC.rda", package="stJoincount")
+fpath <- system.file("extdata", "humanBC.rda", package="stJoincount")
 load(fpath)
 mosaicIntegration <- rasterizeEachCluster(humanBC)
 mosaicIntPlot(humanBC, mosaicIntegration)

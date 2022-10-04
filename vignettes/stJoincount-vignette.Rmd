@@ -28,23 +28,83 @@ library(pheatmap)
 library(ggplot2)
 ```
 
-v0.99.9
+v0.99.11
 
-stJoincount: Quantification tool for spatial correlation between clusters in spatial transciptomics pre-processed data using join count statustic approach.  
+stJoincount: Quantification tool for spatial correlation between clusters in spatial transcriptomics preprocessed data using join count statistic approach.  
 
-# Introducation
-Spatial dependency is the relationship between locational and attribute similarity. The measure reflects whether an attribute of a variable observed at one location is independent of values observed at neighboring locations. Positive spatial dependency exists when neighboring attributes are more similar than what could be explained by chance. Likewise, a negative spatial dependency is reflected by a dissimilarity of neighboring attributes. Join count analysis allows for quantification of the spatial dependencies of nominal data in an arrangement of spatially adjacent polygons.
+# Introduction
+Spatial dependency is the relationship between location and attribute similarity. The measure reflects whether an attribute of a variable observed at one location is independent of values observed at neighboring locations. Positive spatial dependency exists when neighboring attributes are more similar than what could be explained by chance. Likewise, a negative spatial dependency is reflected by a dissimilarity of neighboring attributes. Join count analysis allows for quantification of the spatial dependencies of nominal data in an arrangement of spatially adjacent polygons.
 
-This tool requires data produced with the 10X Genomics Visium Spatial Gene Expression platform with customized clusters. The purpose of this R package is to perform join count analysis for spatial correlation between clusters. Examples of how to run this tool are below:  
+This tool requires data produced with the 10X Genomics Visium Spatial Gene Expression platform with customized clusters. The purpose of this R package is to perform join count analysis for spatial correlation between clusters. 
 
-# Loading the data
+
+# Installation
+
+Users can install `stJoincount` with:
+
+```{r "install", eval = FALSE}
+if (!requireNamespace("BiocManager", quietly = TRUE)) {
+      install.packages("BiocManager")
+  }
+BiocManager::install("stJoincount")
+```
+
+Examples of how to run this tool are below:  
+
+# Preprocessing
 In this vignette, we are going to use an human breast cancer spatial transcriptomics sample.
 ```{r}
-fpath <- system.file("script", "humanBC.rda", package="stJoincount")
+fpath <- system.file("extdata", "humanBC.rda", package="stJoincount")
 load(fpath)
 head(humanBC)
 ```
 
+Within the ‘extdata’ user can find a dataframe "humanBC.rda". This example data has come from a Seurat object of a human breast cancer sample. It contains the following information that is essential to this algorithm - barcode (index), cluster (they could either be categorical or numerical labels), central pixel location (imagerow and imagecol). This dataframe is simplified after combining metadata with spatial coordinates.
+
+An example data preparation from Seurat:
+```{r, eval=FALSE}
+library(Seurat)
+library(utils)
+# Create a seurat object (this step can be skipped if user have customized label attached already, please start with "get metadata")
+filename <- "../humanBC/"
+spe <- Load10X_Spatial(filename)
+sampleTransform <- SCTransform(spe, assay = "Spatial", verbose = FALSE)
+clusterLabel <- read.csv(paste(filename, "/analysis/clustering/graphclust/clusters.csv", sep = ""), sep = ',')
+if (colnames(clusterLabel)[1] == "barcode"){
+  colnames(clusterLabel)[colnames(clusterLabel) == "barcode"] <- "Barcode"
+  colnames(clusterLabel)[colnames(clusterLabel) == "cluster"] <- "Cluster"
+}
+rownames(clusterLabel) <- clusterLabel$Barcode
+spe <- AddMetaData(object = sampleTransform, metadata = clusterLabel)
+
+# Get metadata of Seurat object
+metadata <- spe@meta.data
+# Optional step: If user used their own labels, rename the column that containing cluster labels to "Cluster" 
+names(metadata)[names(metadata) == 'label'] <- "Cluster"
+coord <- GetTissueCoordinates(spe)
+merged <-  merge(metadata, coord, by = 0)
+humanBC <- merged[c("Barcode", "imagecol", "imagerow", "Cluster")]
+rownames(humanBC) <- humanBC$"Barcode"
+```
+
+An example data preparation from SpatialExperiment object:
+Standard analysis steps to get labels based on graph-based clustering can be found here [Chapter 13 Clustering | Orchestrating Spatially-Resolved Transcriptomics Analysis With Bioconductor](https://lmweber.org/OSTA-book/clustering.html)
+Users can use their customized label as well.
+```{r, eval=FALSE}
+# Get metadata a SpaitialExperiment object
+metadata <- colData(spe)
+# If user used their own labels, rename the column that containing cluster labels to "Cluster" 
+names(metadata)[names(metadata) == 'label'] <- "Cluster"
+coord <- spatialCoords(spe)
+merged <-  merge(metadata, coord, by = 0)
+
+names(merged)[names(merged) == 'pxl_col_in_fullres'] <- "imagecol"
+names(merged)[names(merged) == 'pxl_row_in_fullres'] <- "imagerow"
+humanBC <- merged[c("barcode_id", "imagecol", "imagerow", "Cluster")]
+rownames(humanBC) <- humanBC$barcode_id
+```
+
+# Raster processing
 This tool first converts a labeled spatial tissue map into a raster object, in which each spatial feature is represented by a pixel coded by label assignment. This process includes automatic calculation of optimal raster resolution and extent for the sample.
 ```{r}
 resolutionList <- resolutionCalc(humanBC)
@@ -78,12 +138,5 @@ zscorePlot(matrix)
 sessionInfo()
 ```
 
-# Installation
-
-You can install `stJoincount` with:
-
-```{r "install", eval = FALSE}
-if (!requireNamespace("BiocManager", quietly = TRUE)) {
-      install.packages("BiocManager")
-  }
-BiocManager::install("stJoincount")
+# Reference
+Chapter 13 Clustering | Orchestrating Spatially-Resolved Transcriptomics Analysis With Bioconductor. 7 Aug. 2022, lmweber.org/OSTA-book/clustering.html.

@@ -12,7 +12,7 @@
 #' @return raster layer with calculated resolution and extent with buffer applied
 #'
 #' @examples
-#' fpath <- system.file("script", "humanBC.rda", package="stJoincount")
+#' fpath <- system.file("extdata", "humanBC.rda", package="stJoincount")
 #' load(fpath)
 #' raster <- rasterPrep(humanBC, 15)
 

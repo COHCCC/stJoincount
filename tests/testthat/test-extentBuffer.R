@@ -13,7 +13,7 @@ checkInput <- function(sampleInfo)
 }
 
 test_that("finding extent buffer", {
-  fpath <- system.file("script", "humanBC.rda", package="stJoincount")
+  fpath <- system.file("extdata", "humanBC.rda", package="stJoincount")
   load(fpath)
   checkInput(humanBC)
 

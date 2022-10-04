@@ -17,7 +17,7 @@ length and height of resolution.
 Automatic calculation of optimal raster resolution for the sample.
 }
 \examples{
-fpath <- system.file("script", "humanBC.rda", package="stJoincount")
+fpath <- system.file("extdata", "humanBC.rda", package="stJoincount")
 load(fpath)
 resolutionList <- resolutionCalc(humanBC)
 }

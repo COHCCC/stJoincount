@@ -8,73 +8,102 @@ Spatial dependency is the relationship between locational and attribute similari
 
 Detailed explanations of each function in this package can be found in `/vignettes/stJointcount-vignette.Rmd`
 
-The following code demonstrates the process of rasterization and join count analysis. In this demo, we use a human breast cancer sample that can be downloaded from 10x Genomics website [here](https://www.10xgenomics.com/resources/datasets/human-breast-cancer-block-a-section-1-1-standard-1-1-0). Users can download the related folders and files directly from the website, or they can follow first two blocks of codes in the vignette, saving them in the R temp folder.
+Users can install `stJoincount` with:
 
-### Data input, normalization, and clustering
-
-The input is a directory containing the H5 file, the image data (in a subdirectory ‘spatial’), and analysis results (in a subdirectory ‘analysis’). This directory is produced by the 10x Genomics Spaceranger pipelines.
-
-```r
-sample <- spatialDataPrep(outDir)
+```{r "install", eval = FALSE}
+if (!requireNamespace("BiocManager", quietly = TRUE)) {
+      install.packages("BiocManager")
+  }
+BiocManager::install("stJoincount")
 ```
 
-This command will load a Seurat object and add the results of Spaceranger's graph-based clustering analysis to the object's metadata. 
+Examples of how to run this tool are below:  
 
-**Note:** Users can skip this step if they want to use the data with custom labels attached. In this case, users should load their object and add label assignments to the object metadata under the title "Cluster". 
+## Preprocessing
 
-```r
-#customlabels is a vector of label assignments for each spatial feature in the object
-sample$Cluster <- customlabels
+In this vignette, we are going to use an human breast cancer spatial transcriptomics sample.
+```{r}
+fpath <- system.file("extdata", "humanBC.rda", package="stJoincount")
+load(fpath)
+head(humanBC)
 ```
 
-Currently, the package only accepts integer labels (i.e. 1, 2, 3, ...). We therefore suggest users with categorical labels create a corresponding integer key. Labels can be checked by `head(sample@meta.data)` and can be changed as needed.
+Within the ‘extdata’ user can find a dataframe "humanBC.rda". This example data has come from a Seurat object of a human breast cancer sample. It contains the following information that is essential to this algorithm - barcode (index), cluster (they could either be categorical or numerical labels), central pixel location (imagerow and imagecol). This dataframe is simplified after combining metadata with spatial coordinates.
 
-### Resolution calculation
+An example data preparation from Seurat:
+```{r, eval=FALSE}
+library(Seurat)
+library(utils)
+# Create a seurat object (this step can be skipped if user have customized label attached already, please start with "get metadata")
+filename <- "../humanBC/"
+spe <- Load10X_Spatial(filename)
+sampleTransform <- SCTransform(spe, assay = "Spatial", verbose = FALSE)
+clusterLabel <- read.csv(paste(filename, "/analysis/clustering/graphclust/clusters.csv", sep = ""), sep = ',')
+if (colnames(clusterLabel)[1] == "barcode"){
+  colnames(clusterLabel)[colnames(clusterLabel) == "barcode"] <- "Barcode"
+  colnames(clusterLabel)[colnames(clusterLabel) == "cluster"] <- "Cluster"
+}
+rownames(clusterLabel) <- clusterLabel$Barcode
+spe <- AddMetaData(object = sampleTransform, metadata = clusterLabel)
 
-```r
-resolutionList <- resolutionCalc(sample)
+# Get metadata of Seurat object
+metadata <- spe@meta.data
+# Optional step: If user used their own labels, rename the column that containing cluster labels to "Cluster" 
+names(metadata)[names(metadata) == 'label'] <- "Cluster"
+coord <- GetTissueCoordinates(spe)
+merged <-  merge(metadata, coord, by = 0)
+humanBC <- merged[c("Barcode", "imagecol", "imagerow", "Cluster")]
+rownames(humanBC) <- humanBC$"Barcode"
 ```
 
-This function calculates the optimal resolution parameters for rasterization of the sample. 
+An example data preparation from SpatialExperiment object:
+Standard analysis steps to get labels based on graph-based clustering can be found here [Chapter 13 Clustering | Orchestrating Spatially-Resolved Transcriptomics Analysis With Bioconductor](https://lmweber.org/OSTA-book/clustering.html)
+Users can use their customized label as well.
+```{r, eval=FALSE}
+# Get metadata a SpaitialExperiment object
+metadata <- colData(spe)
+# If user used their own labels, rename the column that containing cluster labels to "Cluster" 
+names(metadata)[names(metadata) == 'label'] <- "Cluster"
+coord <- spatialCoords(spe)
+merged <-  merge(metadata, coord, by = 0)
 
-### Rasterization
-
-```r
-mosaicIntegration <- rasterizeEachCluster(sample)
-mosaicIntPlot(mosaicIntegration)
+names(merged)[names(merged) == 'pxl_col_in_fullres'] <- "imagecol"
+names(merged)[names(merged) == 'pxl_row_in_fullres'] <- "imagerow"
+humanBC <- merged[c("barcode_id", "imagecol", "imagerow", "Cluster")]
+rownames(humanBC) <- humanBC$barcode_id
 ```
-This function completes rasterization and label coding of the sample.
 
-<p align="center"><img src="https://github.com/Nina-Song/stJoincount/blob/master/inst/extdata/rasterization.png" height="400"></p>
+## Raster processing
 
-### Joint count analysis
+This tool first converts a labeled spatial tissue map into a raster object, in which each spatial feature is represented by a pixel coded by label assignment. This process includes automatic calculation of optimal raster resolution and extent for the sample.
+```{r}
+resolutionList <- resolutionCalc(humanBC)
+resolutionList
+```
 
-```r
+```{r}
+mosaicIntegration <- rasterizeEachCluster(humanBC)
+```
+
+## Join count analysis
+
+A neighbors list is then created from the rasterized sample, in which adjacent and diagonal neighbors for each pixel are identified. After adding binary spatial weights to the neighbors list, a multi-categorical join count analysis is performed to tabulate "joins" between all possible combinations of label pairs. The function returns the observed join counts, the expected count under conditions of spatial randomness, and the variance calculated under non-free sampling.
+```{r}
 joincount.result <- joincountAnalysis(mosaicIntegration)
 ```
 
-This command performes multi-categorical join count analysis of the rasterized sample. The image below shows a portion of the results.
+The z-score is then calculated as the difference between observed and expected counts, divided by the square root of the variance. A heatmap of z-scores represents the result from the join count analysis for all possible label pairs.
 
-<p align="center"><img src="https://github.com/Nina-Song/stJoincount/blob/master/inst/extdata/joincountResult.png" height="400"></p>
-
-### Results visualization
-
-```r
-heatmapMatrix <- zscoreMatrix(sample, joincount.result)
-
-zscorePlot(heatmapMatrix)
+```{r}
+matrix <- zscoreMatrix(humanBC, joincount.result)
 ```
 
-This command provides a heatmap of z-scores resulting from the join count analysis for all possible label pairs.
+## More examples
 
-<p align="center"><img src="https://github.com/Nina-Song/stJoincount/blob/master/inst/extdata/zscoreHeatmap.png" height="400"></p>
-
-
-### Installation
-```r
-library(devtools)
-install_github("Nina-Song/stJoincount")
+```{r}
+browseVignettes("stJoincount")
 ```
 
 ### Contact
+
 songjiar@usc.edu

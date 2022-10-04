@@ -10,7 +10,7 @@
 #' @return length and height of resolution.
 #'
 #' @examples
-#' fpath <- system.file("script", "humanBC.rda", package="stJoincount")
+#' fpath <- system.file("extdata", "humanBC.rda", package="stJoincount")
 #' load(fpath)
 #' resolutionList <- resolutionCalc(humanBC)
 

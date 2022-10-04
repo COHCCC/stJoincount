@@ -1,5 +1,5 @@
 test_that("Visualization of the z-score matrix", {
-  fpath <- system.file("script", "humanBC.rda", package="stJoincount")
+  fpath <- system.file("extdata", "humanBC.rda", package="stJoincount")
   load(fpath)
 
   mosaicIntegration <- rasterizeEachCluster(humanBC)

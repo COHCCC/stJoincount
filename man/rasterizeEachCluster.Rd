@@ -19,7 +19,7 @@ Converts a labeled spatial tissue map into a raster object,
 in which each spatial cluster is represented by a pixel coded by label assignment.
 }
 \examples{
-fpath <- system.file("script", "humanBC.rda", package="stJoincount")
+fpath <- system.file("extdata", "humanBC.rda", package="stJoincount")
 load(fpath)
 mosaicIntegration <- rasterizeEachCluster(humanBC)
 }

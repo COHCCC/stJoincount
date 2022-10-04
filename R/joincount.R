@@ -11,7 +11,7 @@
 #' @return the observed join counts, the expected count under conditions of spatial randomness, the variance calculated under non-free sampling, and calculated Z-score.
 #'
 #' @examples
-#' fpath <- system.file("script", "humanBC.rda", package="stJoincount")
+#' fpath <- system.file("extdata", "humanBC.rda", package="stJoincount")
 #' load(fpath)
 #' mosaicIntegration <- rasterizeEachCluster(humanBC)
 #' joincount.result <- joincountAnalysis(mosaicIntegration)
@@ -21,12 +21,12 @@ joincountAnalysis <- function(mosaicIntegration){
 
   emptyPos <- which(mosaicIntegration@data@values == 0)
   subList <- subset.nb(nbList,
-                       !(1:length(nbList) %in% emptyPos))
+                       !(seq_len(length(nbList)) %in% emptyPos))
   temp.subList <- lapply(subList, as.character)
   noNeighborPos <- which(vapply(temp.subList, FUN =  function(X) "0" %in% X, logical(1)))
 
   filteredList <- subset.nb(subList,
-                            !(1:length(subList) %in% noNeighborPos))
+                            !(seq_len(length(subList)) %in% noNeighborPos))
 
   weightsList <- nb2listw(filteredList,
                           style = "B",

@@ -25,7 +25,7 @@ This function is to find the right buffer for the sample coordinates
 so that each cluster is not lost in the process of converting a spot to a pixel.
 }
 \examples{
-fpath <- system.file("script", "humanBC.rda", package="stJoincount")
+fpath <- system.file("extdata", "humanBC.rda", package="stJoincount")
 load(fpath)
 n <- extentBuffer(humanBC)
 }

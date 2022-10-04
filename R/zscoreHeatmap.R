@@ -9,7 +9,7 @@
 #' @return z-score matrix resulting from the join count analysis for all possible label pairs
 #'
 #' @examples
-#' fpath <- system.file("script", "humanBC.rda", package="stJoincount")
+#' fpath <- system.file("extdata", "humanBC.rda", package="stJoincount")
 #' load(fpath)
 #' mosaicIntegration <- rasterizeEachCluster(humanBC)
 #' joincount.result <- joincountAnalysis(mosaicIntegration)
@@ -45,7 +45,7 @@ zscoreMatrix <- function(sampleInfo, joincount.result){
 #' @return Heatmap plot
 #'
 #' @examples
-#' fpath <- system.file("script", "humanBC.rda", package="stJoincount")
+#' fpath <- system.file("extdata", "humanBC.rda", package="stJoincount")
 #' load(fpath)
 #' mosaicIntegration <- rasterizeEachCluster(humanBC)
 #' joincount.result <- joincountAnalysis(mosaicIntegration)

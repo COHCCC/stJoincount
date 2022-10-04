@@ -23,7 +23,7 @@ in the process of converting the spot to pixel,
 apply this buffer to this function to find a suitable rectangle for the rasterlayer
 }
 \examples{
-fpath <- system.file("script", "humanBC.rda", package="stJoincount")
+fpath <- system.file("extdata", "humanBC.rda", package="stJoincount")
 load(fpath)
 raster <- rasterPrep(humanBC, 15)
 }

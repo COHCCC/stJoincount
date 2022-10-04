@@ -11,7 +11,7 @@
 #' @return A raster object converted from a labeled spatial tissue map.
 #'
 #' @examples
-#' fpath <- system.file("script", "humanBC.rda", package="stJoincount")
+#' fpath <- system.file("extdata", "humanBC.rda", package="stJoincount")
 #' load(fpath)
 #' mosaicIntegration <- rasterizeEachCluster(humanBC)
 
@@ -32,7 +32,7 @@ rasterizeEachCluster <- function(sampleInfo){
     clusterName <- assign(nam, rasterize(spdf, r, field = i, extent = jc.extent, background = 0))
     mosaicClusters <- c(mosaicClusters, clusterName)
   }
-  names(mosaicClusters)[1:2] <- c('x', 'y')
+  names(mosaicClusters)[seq_len(2)] <- c('x', 'y')
   mosaicClusters$fun <- max
   mosaicClusters$na.rm <- TRUE
 
@@ -52,7 +52,7 @@ rasterizeEachCluster <- function(sampleInfo){
 #' @return A mosaic plot with labeled pixels.
 #'
 #' @examples
-#' fpath <- system.file("script", "humanBC.rda", package="stJoincount")
+#' fpath <- system.file("extdata", "humanBC.rda", package="stJoincount")
 #' load(fpath)
 #' mosaicIntegration <- rasterizeEachCluster(humanBC)
 #' mosaicIntPlot(humanBC, mosaicIntegration)

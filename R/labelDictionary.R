@@ -7,7 +7,7 @@
 #'
 #' @return A mosaic plot with labeled pixels.
 #' @examples
-#' fpath <- system.file("script", "humanBC.rda", package="stJoincount")
+#' fpath <- system.file("extdata", "humanBC.rda", package="stJoincount")
 #' load(fpath)
 #' nameList <- customDict(humanBC)
 #'

@@ -19,7 +19,7 @@ Create a dictionary with categorical cluster labels as values
 and their converted numerical labels as keys
 }
 \examples{
-fpath <- system.file("script", "humanBC.rda", package="stJoincount")
+fpath <- system.file("extdata", "humanBC.rda", package="stJoincount")
 load(fpath)
 nameList <- customDict(humanBC)
 

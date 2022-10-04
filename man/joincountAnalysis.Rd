@@ -20,7 +20,7 @@ the rasterized sample. A neighbors list is then created from the rasterized samp
 in which adjacent and diagonal neighbors for each pixel are identified.
 }
 \examples{
-fpath <- system.file("script", "humanBC.rda", package="stJoincount")
+fpath <- system.file("extdata", "humanBC.rda", package="stJoincount")
 load(fpath)
 mosaicIntegration <- rasterizeEachCluster(humanBC)
 joincount.result <- joincountAnalysis(mosaicIntegration)

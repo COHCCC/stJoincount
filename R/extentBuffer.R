@@ -14,7 +14,7 @@
 #' @return optimal number of buffer for extent
 #'
 #' @examples
-#' fpath <- system.file("script", "humanBC.rda", package="stJoincount")
+#' fpath <- system.file("extdata", "humanBC.rda", package="stJoincount")
 #' load(fpath)
 #' n <- extentBuffer(humanBC)
 
@@ -36,14 +36,14 @@ extentBuffer <- function(sampleInfo){
       valueCheck <- sum(clusterName@data@values)/i
       if (valueCheck != nrow(subCluster)){
         break
-      } else { k = k + 1}
+      } else { k <- k + 1}
     }
     if (k == clusterNumber){
       message(paste("Find optimal number of n. n =", n, sep = " "))
       return(n)
       break
     }
-    n = n + 5
+    n <- n + 5
   }
   message("No optimal number found, using n = 110 instead.")
   message("In this case, there may be minor deviations in the subsequent calculation process.
