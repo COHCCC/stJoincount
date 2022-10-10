@@ -8,8 +8,11 @@ in which each spatial cluster is represented by a pixel coded by label assignmen
 rasterizeEachCluster(sampleInfo)
 }
 \arguments{
-\item{sampleInfo}{A dataset of a human breast cancer sample containing the
-pixel information and cluster labels for each barcode.}
+\item{sampleInfo}{A data.frame contains the pixel information and cluster labels for each barcode of a human breast cancer sample.
+The index contains barcodes, and at least three other columns that have these information are required and the column names should be the same as following:
+"imagerow": The row pixel coordinate of the center of the spot
+"imagecol": The column pixel coordinate of the center of the spot
+"Cluster": The label that corresponding to this barcode}
 }
 \value{
 A raster object converted from a labeled spatial tissue map.
@@ -19,7 +22,7 @@ Converts a labeled spatial tissue map into a raster object,
 in which each spatial cluster is represented by a pixel coded by label assignment.
 }
 \examples{
-fpath <- system.file("extdata", "humanBC.rda", package="stJoincount")
+fpath <- system.file("extdata", "dataframe.rda", package="stJoincount")
 load(fpath)
 mosaicIntegration <- rasterizeEachCluster(humanBC)
 }

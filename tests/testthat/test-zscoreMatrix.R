@@ -13,7 +13,7 @@ checkInput <- function(sampleInfo)
 }
 
 test_that("z-score matrix", {
-  fpath <- system.file("extdata", "humanBC.rda", package="stJoincount")
+  fpath <- system.file("extdata", "dataframe.rda", package="stJoincount")
   load(fpath)
   checkInput(humanBC)
 

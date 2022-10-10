@@ -11,7 +11,7 @@
 #' @return the observed join counts, the expected count under conditions of spatial randomness, the variance calculated under non-free sampling, and calculated Z-score.
 #'
 #' @examples
-#' fpath <- system.file("extdata", "humanBC.rda", package="stJoincount")
+#' fpath <- system.file("extdata", "dataframe.rda", package="stJoincount")
 #' load(fpath)
 #' mosaicIntegration <- rasterizeEachCluster(humanBC)
 #' joincount.result <- joincountAnalysis(mosaicIntegration)

@@ -1,7 +1,7 @@
 Package: stJoincount
 Type: Package
 Title: stJoincount - Join count statistic for quantifying spatial correlation between clusters
-Version: 0.99.12
+Version: 0.99.13
 Authors@R: c(
     person("Jiarong", "Song", email="songjiar@usc.edu",role=c("cre","aut"), comment = c('ORCID' = "0000-0002-3673-4853")),
     person("Rania", "Bassiouni", email="rbassiou@usc.edu", role=c("aut")),
@@ -23,12 +23,17 @@ Depends:
 Imports: 
     graphics, 
     stats, 
+    dplyr,
+    magrittr,
     sp, 
     raster, 
     spdep, 
     ggplot2,
     pheatmap,
-    grDevices
+    grDevices,
+    Seurat,
+    SpatialExperiment,
+    SummarizedExperiment
 LazyData: FALSE
 RoxygenNote: 7.2.1
 Suggests: 

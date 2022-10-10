@@ -13,7 +13,7 @@ checkInput <- function(sampleInfo)
 }
 
 test_that("the observed join counts", {
-  fpath <- system.file("extdata", "humanBC.rda", package="stJoincount")
+  fpath <- system.file("extdata", "dataframe.rda", package="stJoincount")
   load(fpath)
   checkInput(humanBC)
 

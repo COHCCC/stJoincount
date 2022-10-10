@@ -1,5 +1,5 @@
 test_that("Visualization of the rasterization results", {
-  fpath <- system.file("extdata", "humanBC.rda", package="stJoincount")
+  fpath <- system.file("extdata", "dataframe.rda", package="stJoincount")
   load(fpath)
 
   mosaicIntegration <- rasterizeEachCluster(humanBC)

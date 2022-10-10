@@ -8,13 +8,16 @@
 #' @importFrom sp coordinates
 #' @export
 #'
-#' @param sampleInfo A dataset of a human breast cancer sample containing the
-#' pixel information and cluster labels for each barcode
+#' @param sampleInfo A data.frame contains the pixel information and cluster labels for each barcode of a human breast cancer sample.
+#' The index contains barcodes, and at least three other columns that have these information are required and the column names should be the same as following:
+#' "imagerow": The row pixel coordinate of the center of the spot
+#' "imagecol": The column pixel coordinate of the center of the spot
+#' "Cluster": The label that corresponding to this barcode
 #'
 #' @return optimal number of buffer for extent
 #'
 #' @examples
-#' fpath <- system.file("extdata", "humanBC.rda", package="stJoincount")
+#' fpath <- system.file("extdata", "dataframe.rda", package="stJoincount")
 #' load(fpath)
 #' n <- extentBuffer(humanBC)
 

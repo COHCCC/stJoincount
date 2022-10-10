@@ -28,7 +28,7 @@ library(pheatmap)
 library(ggplot2)
 ```
 
-v0.99.12
+v0.99.13
 
 stJoincount: Quantification tool for spatial correlation between clusters in spatial transcriptomics preprocessed data using join count statistic approach.  
 
@@ -54,54 +54,31 @@ Examples of how to run this tool are below:
 # Preprocessing
 In this vignette, we are going to use an human breast cancer spatial transcriptomics sample.
 ```{r}
-fpath <- system.file("extdata", "humanBC.rda", package="stJoincount")
+fpath <- system.file("extdata", "dataframe.rda", package="stJoincount")
 load(fpath)
 head(humanBC)
 ```
 
-Within the ‘extdata’ user can find a dataframe "humanBC.rda". This example data has come from a Seurat object of a human breast cancer sample. It contains the following information that is essential to this algorithm - barcode (index), cluster (they could either be categorical or numerical labels), central pixel location (imagerow and imagecol). This dataframe is simplified after combining metadata with spatial coordinates.
+Within the ‘extdata’ user can find a dataframe "humanBC.rda". This example data is a `data.frame` that comes from a `Seurat` object of a human breast cancer sample. It contains the following information that is essential to this algorithm - barcode (index), cluster (they could either be categorical or numerical labels), central pixel location (imagerow and imagecol). This dataframe is simplified after combining metadata with spatial coordinates.
+The index contains barcodes, and at least three other columns that have these information are required and the column names should be the same as following:
+`imagerow`: The row pixel coordinate of the center of the spot
+`imagecol`: The column pixel coordinate of the center of the spot
+`Cluster`: The label that corresponding to this barcode
+
+The following codes demonstrate how to generate the described `data.frame` from `Seurat`/`spatialExperiment` Objects.
 
 An example data preparation from Seurat:
-```{r, eval=FALSE}
-library(Seurat)
-library(utils)
-# Create a seurat object (this step can be skipped if user have customized label attached already, please start with "get metadata")
-filename <- "../humanBC/"
-spe <- Load10X_Spatial(filename)
-sampleTransform <- SCTransform(spe, assay = "Spatial", verbose = FALSE)
-clusterLabel <- read.csv(paste(filename, "/analysis/clustering/graphclust/clusters.csv", sep = ""), sep = ',')
-if (colnames(clusterLabel)[1] == "barcode"){
-  colnames(clusterLabel)[colnames(clusterLabel) == "barcode"] <- "Barcode"
-  colnames(clusterLabel)[colnames(clusterLabel) == "cluster"] <- "Cluster"
-}
-rownames(clusterLabel) <- clusterLabel$Barcode
-spe <- AddMetaData(object = sampleTransform, metadata = clusterLabel)
-
-# Get metadata of Seurat object
-metadata <- spe@meta.data
-# Optional step: If user used their own labels, rename the column that containing cluster labels to "Cluster" 
-names(metadata)[names(metadata) == 'label'] <- "Cluster"
-coord <- GetTissueCoordinates(spe)
-merged <-  merge(metadata, coord, by = 0)
-humanBC <- merged[c("Barcode", "imagecol", "imagerow", "Cluster")]
-rownames(humanBC) <- humanBC$"Barcode"
+```{r}
+fpath <- system.file("extdata", "SeuratBC.rda", package="stJoincount")
+load(fpath)
+df <- dataPrepFromSeurat(SeuratBC, "label")
 ```
 
 An example data preparation from SpatialExperiment object:
-Standard analysis steps to get labels based on graph-based clustering can be found here [Chapter 13 Clustering | Orchestrating Spatially-Resolved Transcriptomics Analysis With Bioconductor](https://lmweber.org/OSTA-book/clustering.html)
-Users can use their customized label as well.
-```{r, eval=FALSE}
-# Get metadata a SpaitialExperiment object
-metadata <- colData(spe)
-# If user used their own labels, rename the column that containing cluster labels to "Cluster" 
-names(metadata)[names(metadata) == 'label'] <- "Cluster"
-coord <- spatialCoords(spe)
-merged <-  merge(metadata, coord, by = 0)
-
-names(merged)[names(merged) == 'pxl_col_in_fullres'] <- "imagecol"
-names(merged)[names(merged) == 'pxl_row_in_fullres'] <- "imagerow"
-humanBC <- merged[c("barcode_id", "imagecol", "imagerow", "Cluster")]
-rownames(humanBC) <- humanBC$barcode_id
+```{r}
+fpath <- system.file("extdata", "SpeBC.rda", package="stJoincount")
+load(fpath)
+df2 <- dataPrepFromSpE(SpeObjBC, "label")
 ```
 
 # Raster processing
@@ -138,5 +115,3 @@ zscorePlot(matrix)
 sessionInfo()
 ```
 
-# Reference
-Chapter 13 Clustering | Orchestrating Spatially-Resolved Transcriptomics Analysis With Bioconductor. 7 Aug. 2022, lmweber.org/OSTA-book/clustering.html.

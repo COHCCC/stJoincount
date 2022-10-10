@@ -9,8 +9,11 @@ apply this buffer to this function to find a suitable rectangle for the rasterla
 rasterPrep(sampleInfo, n)
 }
 \arguments{
-\item{sampleInfo}{A dataset of a human breast cancer sample containing the
-pixel information and cluster labels for each barcode.}
+\item{sampleInfo}{A data.frame contains the pixel information and cluster labels for each barcode of a human breast cancer sample.
+The index contains barcodes, and at least three other columns that have these information are required and the column names should be the same as following:
+"imagerow": The row pixel coordinate of the center of the spot
+"imagecol": The column pixel coordinate of the center of the spot
+"Cluster": The label that corresponding to this barcode}
 
 \item{n}{buffer for extent (from function extentBuffer).}
 }
@@ -23,7 +26,7 @@ in the process of converting the spot to pixel,
 apply this buffer to this function to find a suitable rectangle for the rasterlayer
 }
 \examples{
-fpath <- system.file("extdata", "humanBC.rda", package="stJoincount")
+fpath <- system.file("extdata", "dataframe.rda", package="stJoincount")
 load(fpath)
 raster <- rasterPrep(humanBC, 15)
 }

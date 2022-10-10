@@ -13,7 +13,7 @@ checkInput <- function(sampleInfo)
 }
 
 test_that("cxreate the raster object converted from a labeled spatial tissue map", {
-  fpath <- system.file("extdata", "humanBC.rda", package="stJoincount")
+  fpath <- system.file("extdata", "dataframe.rda", package="stJoincount")
   load(fpath)
   checkInput(humanBC)
 

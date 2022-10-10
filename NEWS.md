@@ -20,7 +20,6 @@
 
 ## stJoincount 0.99.4
 
----------------------
 * Fixed merge errors
 
 ## stJoincount 0.99.5
@@ -58,3 +57,7 @@
 ## stJoincount 0.99.12
 
 * Optimized code
+
+## stJoincount 0.99.13
+
+* Added data preparation 
