@@ -61,3 +61,7 @@
 ## stJoincount 0.99.13
 
 * Added data preparation 
+
+## stJoincount 0.99.14
+
+* Fixed minor issue in testthat
