@@ -28,7 +28,7 @@ library(pheatmap)
 library(ggplot2)
 ```
 
-v0.99.15
+v0.99.16
 
 stJoincount: Quantification tool for spatial correlation between clusters in spatial transcriptomics preprocessed data using join count statistic approach.  
 

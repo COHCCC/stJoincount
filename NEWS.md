@@ -70,3 +70,7 @@
 
 * Extdata re-decumentation
 * Fixing minor issue in /man
+
+## stJoincount 0.99.16
+
+* Slim the size of example data.frame
