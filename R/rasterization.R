@@ -1,3 +1,5 @@
+#' Create a raster object from a labeled sample
+#'
 #' Converts a labeled spatial tissue map into a raster object,
 #' in which each spatial cluster is represented by a pixel coded by label assignment.
 #'
@@ -11,7 +13,7 @@
 #' "imagecol": The column pixel coordinate of the center of the spot
 #' "Cluster": The label that corresponding to this barcode
 #'
-#' @return A raster object converted from a labeled spatial tissue map.
+#' @return This function returns a class of RasterLayer. This raster object is converted from a labeled spatial tissue map.
 #'
 #' @examples
 #' fpath <- system.file("extdata", "dataframe.rda", package="stJoincount")
@@ -43,6 +45,8 @@ rasterizeEachCluster <- function(sampleInfo){
   return(mosaicIntegration)
 }
 
+#' Mosaic plot
+#'
 #' Visualization of the rasterization results and label coding of the sample.
 #'
 #' @importFrom raster rasterToPoints

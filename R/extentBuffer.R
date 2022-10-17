@@ -1,3 +1,5 @@
+#' Find optimal number of buffer for extent
+#'
 #' When we create the rasterlayer, there will be a rectangular range.
 #' It is often necessary to provide a buffer to ensure that subsequent functions
 #' do not result in blank or missed pixels.
@@ -13,6 +15,7 @@
 #' "imagerow": The row pixel coordinate of the center of the spot
 #' "imagecol": The column pixel coordinate of the center of the spot
 #' "Cluster": The label that corresponding to this barcode
+#' This data.frame can be produced by "dataPrepFromSeurat()/dataPrepFromSpE" functions
 #'
 #' @return optimal number of buffer for extent
 #'

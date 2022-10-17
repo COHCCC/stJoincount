@@ -2,8 +2,7 @@
 % Please edit documentation in R/zscoreHeatmap.R
 \name{zscoreMatrix}
 \alias{zscoreMatrix}
-\title{This function provides a heatmap of z-scores resulting
-from the join count analysis for all possible label pairs.}
+\title{Generate Z-score matrix}
 \usage{
 zscoreMatrix(sampleInfo, joincount.result)
 }
@@ -17,7 +16,7 @@ The index contains barcodes, and at least three other columns that have these in
 \item{joincount.result}{calculated result from join count analysis}
 }
 \value{
-z-score matrix resulting from the join count analysis for all possible label pairs
+A data.frame that has a z-score matrix resulting from the join count analysis for all possible label pairs
 }
 \description{
 This function provides a heatmap of z-scores resulting

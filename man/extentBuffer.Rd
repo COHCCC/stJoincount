@@ -2,11 +2,7 @@
 % Please edit documentation in R/extentBuffer.R
 \name{extentBuffer}
 \alias{extentBuffer}
-\title{When we create the rasterlayer, there will be a rectangular range.
-It is often necessary to provide a buffer to ensure that subsequent functions
-do not result in blank or missed pixels.
-This function is to find the right buffer for the sample coordinates
-so that each cluster is not lost in the process of converting a spot to a pixel.}
+\title{Find optimal number of buffer for extent}
 \usage{
 extentBuffer(sampleInfo)
 }
@@ -15,7 +11,8 @@ extentBuffer(sampleInfo)
 The index contains barcodes, and at least three other columns that have these information are required and the column names should be the same as following:
 "imagerow": The row pixel coordinate of the center of the spot
 "imagecol": The column pixel coordinate of the center of the spot
-"Cluster": The label that corresponding to this barcode}
+"Cluster": The label that corresponding to this barcode
+This data.frame can be produced by "dataPrepFromSeurat()/dataPrepFromSpE" functions}
 }
 \value{
 optimal number of buffer for extent

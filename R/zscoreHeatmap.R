@@ -1,3 +1,5 @@
+#' Generate Z-score matrix
+#'
 #' This function provides a heatmap of z-scores resulting
 #' from the join count analysis for all possible label pairs.
 #'
@@ -10,7 +12,7 @@
 #'
 #' @export
 #'
-#' @return z-score matrix resulting from the join count analysis for all possible label pairs
+#' @return A data.frame that has a z-score matrix resulting from the join count analysis for all possible label pairs
 #'
 #' @examples
 #' fpath <- system.file("extdata", "dataframe.rda", package="stJoincount")
@@ -38,6 +40,7 @@ zscoreMatrix <- function(sampleInfo, joincount.result){
     return(jcMatrix)
 }
 
+
 #' Visulization of Z-score heatmap.
 #'
 #' @importFrom grDevices colorRampPalette
@@ -46,7 +49,7 @@ zscoreMatrix <- function(sampleInfo, joincount.result){
 #'
 #' @param zscoreMatrix calculated and reshaped z-score matirx from join count analysis.
 #'
-#' @return Heatmap plot
+#' @return A Heatmap plot
 #'
 #' @examples
 #' fpath <- system.file("extdata", "dataframe.rda", package="stJoincount")

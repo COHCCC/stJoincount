@@ -2,8 +2,7 @@
 % Please edit documentation in R/labelDictionary.R
 \name{customDict}
 \alias{customDict}
-\title{Create a dictionary with categorical cluster labels as values
-and their converted numerical labels as keys}
+\title{Generate dict of cluster names}
 \usage{
 customDict(sampleInfo)
 }
@@ -15,7 +14,8 @@ The index contains barcodes, and at least three other columns that have these in
 "Cluster": The label that corresponding to this barcode}
 }
 \value{
-A mosaic plot with labeled pixels.
+A dictionary with categorical cluster labels as values
+and their converted numerical labels as keys.
 }
 \description{
 Create a dictionary with categorical cluster labels as values

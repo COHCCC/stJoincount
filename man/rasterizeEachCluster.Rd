@@ -2,8 +2,7 @@
 % Please edit documentation in R/rasterization.R
 \name{rasterizeEachCluster}
 \alias{rasterizeEachCluster}
-\title{Converts a labeled spatial tissue map into a raster object,
-in which each spatial cluster is represented by a pixel coded by label assignment.}
+\title{Create a raster object from a labeled sample}
 \usage{
 rasterizeEachCluster(sampleInfo)
 }
@@ -15,7 +14,7 @@ The index contains barcodes, and at least three other columns that have these in
 "Cluster": The label that corresponding to this barcode}
 }
 \value{
-A raster object converted from a labeled spatial tissue map.
+This function returns a class of RasterLayer. This raster object is converted from a labeled spatial tissue map.
 }
 \description{
 Converts a labeled spatial tissue map into a raster object,

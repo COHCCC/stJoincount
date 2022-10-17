@@ -2,11 +2,7 @@
 % Please edit documentation in R/dataPrep.R
 \name{dataPrepFromSpE}
 \alias{dataPrepFromSpE}
-\title{This data preparation function creates a data.frame form Spatial Experiment Object.
-It extracts the pixel information and cluster labels of each barcode from user's input Seurat Object
-and generate a data.frame with a certain format which is required for the algorithm.
-If the user has customized labels, this function will change the column name to "Cluster" when generating
-the data.frame to make it consist to the required format.}
+\title{Data Preparation from SpatialExperiment Object}
 \usage{
 dataPrepFromSpE(SpeObj, label)
 }
@@ -16,7 +12,7 @@ dataPrepFromSpE(SpeObj, label)
 \item{label}{the column name of the label information in "colData"}
 }
 \value{
-data.frame A data.frame contains the pixel information and cluster labels for each barcode of a human breast cancer sample.
+A data.frame contains the pixel information and cluster labels for each barcode of the sample.
 The index contains barcodes, and at least three other columns that have these information are required and the column names should be the same as following:
 "imagerow": The row pixel coordinate of the center of the spot
 "imagecol": The column pixel coordinate of the center of the spot

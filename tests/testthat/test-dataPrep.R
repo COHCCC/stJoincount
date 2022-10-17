@@ -2,7 +2,7 @@ test_that("generate data.frame from Seurat object", {
   fpath <- system.file("extdata", "SeuratBC.rda", package="stJoincount")
   load(fpath)
 
-  df <- dataPrepFromSeurat(SeuratBC, "label")
+  df <- dataPrepFromSeurat(seuratBC, "Cluster")
   expect_type(df, "list")
 })
 

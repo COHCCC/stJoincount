@@ -1,3 +1,5 @@
+#' Resolution calculation
+#'
 #' Automatic calculation of optimal raster resolution for the sample.
 #'
 #' @importFrom stats median
@@ -10,7 +12,7 @@
 #' "imagecol": The column pixel coordinate of the center of the spot
 #' "Cluster": The label that corresponding to this barcode
 #'
-#' @return length and height of resolution.
+#' @return A list that contains length and height of resolution.
 #'
 #' @examples
 #' fpath <- system.file("extdata", "dataframe.rda", package="stJoincount")

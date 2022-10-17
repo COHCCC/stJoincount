@@ -1,3 +1,5 @@
+#' Generate dict of cluster names
+#'
 #' Create a dictionary with categorical cluster labels as values
 #' and their converted numerical labels as keys
 #'
@@ -6,10 +8,11 @@
 #' "imagerow": The row pixel coordinate of the center of the spot
 #' "imagecol": The column pixel coordinate of the center of the spot
 #' "Cluster": The label that corresponding to this barcode
-#'
 #' @export
 #'
-#' @return A mosaic plot with labeled pixels.
+#' @return A dictionary with categorical cluster labels as values
+#' and their converted numerical labels as keys.
+#'
 #' @examples
 #' fpath <- system.file("extdata", "dataframe.rda", package="stJoincount")
 #' load(fpath)

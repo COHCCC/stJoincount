@@ -2,7 +2,7 @@
 % Please edit documentation in R/resolution.R
 \name{resolutionCalc}
 \alias{resolutionCalc}
-\title{Automatic calculation of optimal raster resolution for the sample.}
+\title{Resolution calculation}
 \usage{
 resolutionCalc(sampleInfo)
 }
@@ -14,7 +14,7 @@ The index contains barcodes, and at least three other columns that have these in
 "Cluster": The label that corresponding to this barcode}
 }
 \value{
-length and height of resolution.
+A list that contains length and height of resolution.
 }
 \description{
 Automatic calculation of optimal raster resolution for the sample.

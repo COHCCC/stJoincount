@@ -1,3 +1,5 @@
+#' Join count analysis
+#'
 #' This function performes multi-categorical join count analysis of
 #' the rasterized sample. A neighbors list is then created from the rasterized sample,
 #' in which adjacent and diagonal neighbors for each pixel are identified.
@@ -8,7 +10,7 @@
 #'
 #' @param mosaicIntegration A raster object converted from a labeled spatial tissue map from Function rasterization.
 #'
-#' @return the observed join counts, the expected count under conditions of spatial randomness, the variance calculated under non-free sampling, and calculated Z-score.
+#' @return A data.frame that contains the observed join counts, the expected count under conditions of spatial randomness, the variance calculated under non-free sampling, and calculated Z-score.
 #'
 #' @examples
 #' fpath <- system.file("extdata", "dataframe.rda", package="stJoincount")

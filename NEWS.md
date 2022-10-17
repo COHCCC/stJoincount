@@ -65,3 +65,8 @@
 ## stJoincount 0.99.14
 
 * Fixed minor issue in testthat
+
+## stJoincount 0.99.15
+
+* Extdata re-decumentation
+* Fixing minor issue in /man

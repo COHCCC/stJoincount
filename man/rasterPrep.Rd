@@ -2,9 +2,7 @@
 % Please edit documentation in R/rasterPrep.R
 \name{rasterPrep}
 \alias{rasterPrep}
-\title{When sample coordinates finds a suitable buffer to ensure that each cluster is not lost
-in the process of converting the spot to pixel,
-apply this buffer to this function to find a suitable rectangle for the rasterlayer}
+\title{Raster layer preparation}
 \usage{
 rasterPrep(sampleInfo, n)
 }
@@ -18,7 +16,7 @@ The index contains barcodes, and at least three other columns that have these in
 \item{n}{buffer for extent (from function extentBuffer).}
 }
 \value{
-raster layer with calculated resolution and extent with buffer applied
+This function returns a class of RasterLayer. This is a raster layer with calculated resolution and extent with buffer applied
 }
 \description{
 When sample coordinates finds a suitable buffer to ensure that each cluster is not lost

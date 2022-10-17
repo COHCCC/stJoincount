@@ -10,7 +10,7 @@ zscorePlot(zscoreMatrix)
 \item{zscoreMatrix}{calculated and reshaped z-score matirx from join count analysis.}
 }
 \value{
-Heatmap plot
+A Heatmap plot
 }
 \description{
 Visulization of Z-score heatmap.

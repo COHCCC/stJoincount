@@ -2,7 +2,7 @@
 % Please edit documentation in R/rasterization.R
 \name{mosaicIntPlot}
 \alias{mosaicIntPlot}
-\title{Visualization of the rasterization results and label coding of the sample.}
+\title{Mosaic plot}
 \usage{
 mosaicIntPlot(sampleInfo, mosaicIntegration)
 }

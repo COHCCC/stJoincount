@@ -1,3 +1,0 @@
-## Description of the data present in `inst/extdata`
-
-Within the ‘extdata’ user can find a dataframe "humanBC.rda". This example data has come from a Seurat object of a human breast cancer sample. It contains the following information that is essential to this algorithm - barcode (index), cluster (they could either be categorical or numerical labels), central pixel location (imagerow and imagecol). This dataframe is simplified after combining metadata of Seurat object with spatial coordinates. More details about how to generate the same format as this example data be found in Vignettes.

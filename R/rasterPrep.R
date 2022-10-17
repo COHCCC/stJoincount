@@ -1,3 +1,5 @@
+#' Raster layer preparation
+#'
 #' When sample coordinates finds a suitable buffer to ensure that each cluster is not lost
 #' in the process of converting the spot to pixel,
 #' apply this buffer to this function to find a suitable rectangle for the rasterlayer
@@ -13,7 +15,7 @@
 #'
 #' @param n buffer for extent (from function extentBuffer).
 #'
-#' @return raster layer with calculated resolution and extent with buffer applied
+#' @return This function returns a class of RasterLayer. This is a raster layer with calculated resolution and extent with buffer applied
 #'
 #' @examples
 #' fpath <- system.file("extdata", "dataframe.rda", package="stJoincount")

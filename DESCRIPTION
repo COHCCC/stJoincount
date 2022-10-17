@@ -1,7 +1,7 @@
 Package: stJoincount
 Type: Package
 Title: stJoincount - Join count statistic for quantifying spatial correlation between clusters
-Version: 0.99.14
+Version: 0.99.15
 Authors@R: c(
     person("Jiarong", "Song", email="songjiar@usc.edu",role=c("cre","aut"), comment = c('ORCID' = "0000-0002-3673-4853")),
     person("Rania", "Bassiouni", email="rbassiou@usc.edu", role=c("aut")),
