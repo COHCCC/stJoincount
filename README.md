@@ -106,4 +106,4 @@ browseVignettes("stJoincount")
 
 ### Contact
 
-songjiar@usc.edu
+jiasong@coh.org
